@@ -20,9 +20,14 @@ jobs:
 
       - name: Prepare
         run: |
-          LAST_RUN_ID=$(curl -s $PAGES_SITE_URL/last_run_id.txt)
-          echo "Last run ID: $LAST_RUN_ID"
-          echo "LAST_RUN_ID=$LAST_RUN_ID" >> $GITHUB_ENV
+          HAS_RUN_ID=$(curl -s -o /dev/null -w "%{http_code}" $PAGES_SITE_URL/last_run_id.txt)
+          if [ $HAS_RUN_ID -ne 200 ]; then
+            echo "No previous run ID found.
+          else
+            LAST_RUN_ID=$(curl -s $PAGES_SITE_URL/last_run_id.txt)
+            echo "Last run ID: $LAST_RUN_ID"
+            echo "LAST_RUN_ID=$LAST_RUN_ID" >> $GITHUB_ENV
+          fi
 
       - name: Download previous reports
         uses: actions/download-artifact@v4

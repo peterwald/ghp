@@ -20,14 +20,14 @@ jobs:
 
       - name: Upload all output files as artifact
         id: output-artifact
-        uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
+        uses: actions/upload-pages-artifact@v3
         with:
           name: ai-eval-report
           path: output/
 
       - name: Upload html file as artifact
         id: html-artifact
-        uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
+        uses: actions/upload-artifact@v3 
         with:
           name: ai-eval-report-html
           path: output/${{github.run_id}}.html          

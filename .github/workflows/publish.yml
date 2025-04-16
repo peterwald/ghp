@@ -5,6 +5,9 @@ on:
     branches:
       - main # or the branch you want to trigger the deployment from
 
+env:
+  PAGES_SITE_URL: "https://peterwald.github.io/ghp/"
+
 jobs:
   # Build job
   build:
@@ -13,10 +16,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build Report
+      - name: Prepare
         run: |
           mkdir -p output
+          LAST_RUN_ID=$(curl $PAGES_SITE_URL/last_run_id.txt)
+          echo "Last run ID: $LAST_RUN_ID"
+          echo "LAST_RUN_ID=$LAST_RUN_ID" >> $GITHUB_ENV
+
+      - name: Download previous reports
+        uses: actions/download-artifact@v4
+        with:
+          name: ai-eval-report
+          run_id: ${{ env.LAST_RUN_ID }}
+          path: output/
+
+      - name: Build Report
+        run: |
+          ls -la output
           cp source/report.html output/${{github.run_id}}.html
+
+      - name: Save last run ID
+        run: |
           echo "${{github.run_id}}" > output/last_run_id.txt
 
       - name: Upload all output files as pages artifact

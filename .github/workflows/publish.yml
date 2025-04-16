@@ -1,7 +1,9 @@
 name: Deploy report to GitHub Pages
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main # or the branch you want to trigger the deployment from
 
 jobs:
   # Build job

@@ -32,10 +32,14 @@ jobs:
           run-id: ${{ env.LAST_RUN_ID }}
           path: prior-reports/
 
-      - name: Build Report
+      - name: Restore Old Reports
         run: |
           mkdir -p output/
           tar xvf prior-reports/artifact.tar -C output/
+          ls -laR output
+
+      - name: Build Report
+        run: |
           cp source/report.html output/${{github.run_id}}.html
           ls -laR output
 

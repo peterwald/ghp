@@ -34,9 +34,10 @@ jobs:
 
       - name: Build Report
         run: |
+          mkdir -p output/
           tar xvf prior-reports/artifact.tar -C output/
-          ls -laR output
           cp source/report.html output/${{github.run_id}}.html
+          ls -laR output
 
       - name: Save last run ID
         run: |

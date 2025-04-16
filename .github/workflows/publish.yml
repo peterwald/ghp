@@ -17,20 +17,14 @@ jobs:
         run: |
           mkdir -p output
           cp source/report.html output/${{github.run_id}}.html
+          echo "${{github.run_id}}" > output/last_run_id.txt
 
-      - name: Upload all output files as artifact
+      - name: Upload all output files as pages artifact
         id: output-artifact
         uses: actions/upload-pages-artifact@v3
         with:
           name: ai-eval-report
           path: output/
-
-      - name: Upload html file as artifact
-        id: html-artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ai-eval-report-html
-          path: output/${{github.run_id}}.html          
 
   # Deployment job
   deploy:

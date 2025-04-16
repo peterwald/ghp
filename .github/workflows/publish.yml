@@ -53,4 +53,4 @@ jobs:
       - name: Writing Markdown
         run: |
           echo '### AI Evaluation Report Output' >> $GITHUB_STEP_SUMMARY          
-          echo '${{ steps.deployment.outputs.page_url }}/${{github.run_id}}.html' >> $GITHUB_STEP_SUMMARY          
+          echo '${{ steps.deployment.outputs.page_url }}${{github.run_id}}.html' >> $GITHUB_STEP_SUMMARY          

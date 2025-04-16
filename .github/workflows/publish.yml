@@ -15,6 +15,7 @@ jobs:
 
       - name: Build Report
         run: |
+          mkdir -p output
           cp source/report.html output/${{github.run_id}}.html
 
       - name: Upload static files as artifact

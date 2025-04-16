@@ -31,6 +31,7 @@ jobs:
 
       - name: Download previous reports
         uses: actions/download-artifact@v4
+        if: ${{ env.LAST_RUN_ID != '' }}
         with:
           name: ai-eval-report
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -38,6 +39,7 @@ jobs:
           path: prior-reports/
 
       - name: Restore Old Reports
+        if: ${{ env.LAST_RUN_ID != '' }}
         run: |
           mkdir -p output/
           tar xvf prior-reports/artifact.tar -C output/
@@ -45,6 +47,7 @@ jobs:
 
       - name: Build Report
         run: |
+          mkdir -p output/
           cp source/report.html output/${{github.run_id}}.html
           ls -laR output
 

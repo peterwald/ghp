@@ -15,6 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       actions: read
+    outputs:
+        report-id: ${{ steps.build-report.outputs.report-id }}
     steps:
       - uses: actions/checkout@v4
 
@@ -45,10 +47,11 @@ jobs:
           tar xvf prior-reports/artifact.tar -C output/
 
       - name: Build Report
+        id: build-report
         run: |
           mkdir -p output/
           REPORT_ID=$(git hash-object -t blob -- source/report.html)
-          echo "REPORT_ID=$REPORT_ID" >> $GITHUB_ENV
+          echo "report-id=$REPORT_ID" >> $GITHUB_OUTPUT
           cp source/report.html output/$REPORT_ID.html
           ls -laR output
 
@@ -84,4 +87,4 @@ jobs:
       - name: Writing Markdown
         run: |
           echo '### AI Evaluation Report Output' >> $GITHUB_STEP_SUMMARY          
-          echo '${{ steps.deployment.outputs.page_url }}${{ env.REPORT_ID }}.html' >> $GITHUB_STEP_SUMMARY          
+          echo '${{ steps.deployment.outputs.page_url }}${{ needs.build.outputs.report-id }}.html' >> $GITHUB_STEP_SUMMARY          

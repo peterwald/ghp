@@ -18,12 +18,19 @@ jobs:
           mkdir -p output
           cp source/report.html output/${{github.run_id}}.html
 
-      - name: Upload static files as artifact
-        id: deployment
+      - name: Upload all output files as artifact
+        id: output-artifact
         uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
         with:
           name: ai-eval-report
           path: output/
+
+      - name: Upload html file as artifact
+        id: html-artifact
+        uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
+        with:
+          name: ai-eval-report-html
+          path: output/${{github.run_id}}.html          
 
   # Deployment job
   deploy:

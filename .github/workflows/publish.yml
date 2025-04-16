@@ -35,6 +35,7 @@ jobs:
 
       - name: Build Report
         run: |
+          tar xvf output/artifact.tar
           ls -laR output
           cp source/report.html output/${{github.run_id}}.html
 

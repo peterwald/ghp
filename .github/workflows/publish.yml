@@ -28,7 +28,8 @@ jobs:
       - name: Download previous reports
         uses: actions/download-artifact@v4
         with:
-          # name: ai-eval-report
+          name: ai-eval-report
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ env.LAST_RUN_ID }}
           path: output/
 

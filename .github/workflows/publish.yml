@@ -20,7 +20,6 @@ jobs:
 
       - name: Prepare
         run: |
-          mkdir -p output
           LAST_RUN_ID=$(curl -s $PAGES_SITE_URL/last_run_id.txt)
           echo "Last run ID: $LAST_RUN_ID"
           echo "LAST_RUN_ID=$LAST_RUN_ID" >> $GITHUB_ENV
@@ -31,11 +30,11 @@ jobs:
           name: ai-eval-report
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ env.LAST_RUN_ID }}
-          path: output/
+          path: prior-reports/
 
       - name: Build Report
         run: |
-          tar xvf output/artifact.tar
+          tar xvf prior-reports/artifact.tar -C output/
           ls -laR output
           cp source/report.html output/${{github.run_id}}.html
 

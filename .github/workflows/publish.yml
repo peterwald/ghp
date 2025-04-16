@@ -27,7 +27,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: ai-eval-report
-          run_id: ${{ env.LAST_RUN_ID }}
+          run-id: ${{ env.LAST_RUN_ID }}
           path: output/
 
       - name: Build Report

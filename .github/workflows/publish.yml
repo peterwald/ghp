@@ -13,13 +13,15 @@ jobs:
   build:
     # Specify runner +  build & upload the static files as an artifact
     runs-on: ubuntu-latest
+    permissions:
+      actions: read
     steps:
       - uses: actions/checkout@v4
 
       - name: Prepare
         run: |
           mkdir -p output
-          LAST_RUN_ID=$(curl $PAGES_SITE_URL/last_run_id.txt)
+          LAST_RUN_ID=$(curl -s $PAGES_SITE_URL/last_run_id.txt)
           echo "Last run ID: $LAST_RUN_ID"
           echo "LAST_RUN_ID=$LAST_RUN_ID" >> $GITHUB_ENV
 
@@ -32,7 +34,7 @@ jobs:
 
       - name: Build Report
         run: |
-          ls -la output
+          ls -laR output
           cp source/report.html output/${{github.run_id}}.html
 
       - name: Save last run ID

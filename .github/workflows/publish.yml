@@ -17,7 +17,7 @@ jobs:
         id: deployment
         uses: actions/upload-pages-artifact@v3 # or specific "vX.X.X" version tag for this action
         with:
-          name: github-pages
+          name: ai-eval-report
           path: output/
 
   # Deployment job
@@ -35,3 +35,10 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: ai-eval-report
+    
+      - name: Writing Markdown
+        run: |
+          echo '### AI Evaluation Report Output' >> $GITHUB_STEP_SUMMARY          
+          echo '${{ steps.deployment.outputs.page_url }}/report.html' >> $GITHUB_STEP_SUMMARY          

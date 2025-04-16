@@ -43,7 +43,6 @@ jobs:
         run: |
           mkdir -p output/
           tar xvf prior-reports/artifact.tar -C output/
-          ls -laR output
 
       - name: Build Report
         run: |
